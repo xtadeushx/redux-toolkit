@@ -1,65 +1,60 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
+import { InputField } from './components/InputField';
+import { TodoList } from './components/TodoList';
+import { addTodo } from './store/todoSlice';
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const { todos } = useSelector((state) => state.todos);
+  const dispatch = useDispatch();
   const [text, setText] = useState('');
 
-  const addTodo = (title) => {
-    if (text.trim().length) {
-      setTodos((prev) => {
-        return [
-          ...prev,
-          {
-            id: new Date().toISOString(),
-            title,
-            completed: false,
-          },
-        ];
-      });
-      setText('');
-    }
-  };
+  // const addTodo = (title) => {
+  //   if (text.trim().length) {
+  //     setTodos((prev) => {
+  //       return [
+  //         ...prev,
+  //         {
+  //           id: new Date().toISOString(),
+  //           title,
+  //           completed: false,
+  //         },
+  //       ];
+  //     });
+  //     setText('');
+  //   }
+  // };
 
-  const removeTodo = (todoId) => setTodos((prev) => prev.filter((todo) => todo.id !== todoId));
+  // const removeTodo = (todoId) => setTodos((prev) => prev.filter((todo) => todo.id !== todoId));
 
-  const toggleTodoCompleted = (todoId) => {
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id !== todoId) return todo;
+  // const toggleTodoCompleted = (todoId) => {
+  //   setTodos(
+  //     todos.map((todo) => {
+  //       if (todo.id !== todoId) return todo;
 
-        return {
-          ...todo,
-          completed : !todo.completed,
-        }
-      
-      }),
-    );
+  //       return {
+  //         ...todo,
+  //         completed : !todo.completed,
+  //       }
+
+  //     }),
+  //   );
+  // };
+  
+  const handleSubmit = () => {
+    dispatch(addTodo(text));
+    setText('');
   };
 
   return (
     <div className="App">
-      <label htmlFor="">
-        <input
-          type="text"
-          placeholder="add todo"
-          name="todos"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
-        <button onClick={() => addTodo(text)}>Add Todo</button>
-      </label>
-      <ul>
-        {todos.map((el) => (
-          <li key={el.id}>
-            <input type="checkbox" checked={el.completed} onChange={()=>toggleTodoCompleted(el.id)} />
-            <span>{el.title}</span>
-            <span onClick={() => removeTodo(el.id)} className="delete">
-              &times;
-            </span>
-          </li>
-        ))}
-      </ul>
+      <InputField text={text} handleInput={setText} handleSubmit={handleSubmit} />
+      <TodoList
+        todos={todos}
+        // removeTodo={removeTodo}
+        // toggleTodoCompleted={toggleTodoCompleted}
+      />
     </div>
   );
 }
