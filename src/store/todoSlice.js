@@ -12,22 +12,16 @@ const todoSlice = createSlice({
     addTodo: (state, action) => {
       state.todos.push({
         id: new Date().toISOString(),
-        title: action.payload.title,
+        title: action.payload.text,
         completed: false,
       });
     },
     removeTodo: (state, action) => {
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
     },
     toggleTodoCompleted: (state, action) => {
-      state.todos = state.todos.map((todo) => {
-        if (todo.id !== action.payload) return todo;
-
-        return {
-          ...todo,
-          completed: !todo.completed,
-        };
-      });
+      const currentTodo = state.todos.find((todo) => todo.id === action.payload.id);
+      currentTodo.completed = !currentTodo.completed;
     },
   },
 });

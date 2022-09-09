@@ -38,4 +38,19 @@ input:checked + span {
   text-decoration: line-through;
   text-decoration-color: brown;
   font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+li> button {
+  border:1px solid tomato;
+  background-color: transparent;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+li> button:disabled {
+  border:1px solid rgb(240, 200, 193);
+  color: rgb(240, 200, 193);
+  cursor: not-allowed;
+  transition: all 0.3s ease;
 }
