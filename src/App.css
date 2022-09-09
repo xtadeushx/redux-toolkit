@@ -34,3 +34,8 @@ label > input {
   color: tomato;
   cursor: pointer;
 }
+input:checked + span {
+  text-decoration: line-through;
+  text-decoration-color: brown;
+  font-weight: 600;
+}
