@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { InputField } from './components/InputField';
 import { TodoList } from './components/TodoList';
-import { addTodo, fatchTodos } from './store/todoSlice';
+import { addNewTodo, addTodo, fatchTodos } from './store/todoSlice';
 
 import './App.css';
 
@@ -18,7 +18,7 @@ function App() {
   }, [dispatch]);
 
   const handleSubmit = () => {
-    dispatch(addTodo({ text }));
+    dispatch(addNewTodo(text));
     setText('');
   };
 
